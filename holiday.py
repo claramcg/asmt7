@@ -3,6 +3,8 @@ import json
 from bs4 import BeautifulSoup
 import requests
 from dataclasses import dataclass
+from config import save_to_jsonloc
+from config import read_jsonloc
 
 
 
@@ -62,11 +64,22 @@ class HolidayList:
             else:
                 print('Please enter a valid holiday.')
 
-    def read_json(self, filelocation):
+    def read_json(self, read_jsonloc):
+        with open(read_jsonloc, 'r') as f:
+            jsonlist = json.load(f)
+            for i in jsonlist['holidays']:
+                self.addHoliday(Holiday(i['name'], i['date']))
         # Read in things from json file location
         # Use addHoliday function to add holidays to inner list.
 
-    def save_to_json(self, filelocation):
+    def save_to_json(self, save_jsonloc):
+        with open(save_jsonloc, 'j') as c:
+            outHolidayList = []
+            for i in self.innerHolidays:
+                holiday = {'name':i.name, 'date':i.date}
+                outHolidayList.append(holiday)
+            json.dump(outHolidayList,c str(lst))
+            
 
         # Write out json file to selected file.
         
@@ -79,7 +92,7 @@ class HolidayList:
             h_r = requests.get(h_url)
             h = h_r.json()
 
-            # inspect website for table name
+            # inspect website for table name -> holidays-table
 
             soup = BeautifulSoup(h_r.text, 'html.parser')
             holidayTable = soup.find('table', attrs = {'id':'holidays-table'})
