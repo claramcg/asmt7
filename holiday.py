@@ -76,10 +76,8 @@ class HolidayList:
         with open(save_jsonloc, 'j') as c:
             outHolidayList = []
             for i in self.innerHolidays:
-                holiday = {'name':i.name, 'date':i.date}
-                outHolidayList.append(holiday)
-            json.dump(outHolidayList,c str(lst))
-            
+             
+
 
         # Write out json file to selected file.
         
