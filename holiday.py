@@ -16,7 +16,6 @@ from dataclasses import dataclass
 class Holiday:
     name: str
     date: dt.date
-
     
     def __str__ (self):
         return '%s %s' % (self.name, self.date) #string output
